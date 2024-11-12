@@ -1,51 +1,53 @@
-import axios from 'axios';
 import { postUrl, userUrl } from 'global';
+import axiosService from './axiosService';
 
 const uploadNewPost = (userId, image, text) => {
   const formData = new FormData();
   formData.append('userId', userId);
   formData.append('text', text);
   formData.append('image', image);
-  return axios.post(postUrl, formData, { headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true });
+  return axiosService.post(postUrl, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  });
 };
 
 const pageSize = 10;
 
 const getPost = (postId) => {
-  return axios.get(postUrl + '/' + postId, { withCredentials: true });
+  return axiosService.get(postUrl + '/' + postId);
 };
 
 const getPostsOfUser = (userId, pageNumber) => {
-  return axios.get(`${userUrl}/${userId}/posts`, { withCredentials: true, params: { pageNumber, pageSize } });
+  return axiosService.get(`${userUrl}/${userId}/posts`, { params: { pageNumber, pageSize } });
 };
 
 const getFeed = (userId, pageNumber) => {
-  return axios.get(`${userUrl}/${userId}/feed`, { withCredentials: true, params: { pageNumber, pageSize } });
+  return axiosService.get(`${userUrl}/${userId}/feed`, { params: { pageNumber, pageSize } });
 };
 
 const postComment = (postId, comment, userId) => {
-  return axios.post(`${postUrl}/${postId}/comments`, { userId, comment }, { withCredentials: true });
+  return axiosService.post(`${postUrl}/${postId}/comments`, { userId, comment });
 };
 
 const getComments = (postId, pageNumber) => {
-  return axios.get(`${postUrl}/${postId}/comments`, { withCredentials: true, params: { pageNumber } });
+  return axiosService.get(`${postUrl}/${postId}/comments`, { params: { pageNumber } });
 };
 
 const isLikedAndSaved = (postId, userId) => {
-  return axios.get(`${postUrl}/${postId}/isLikedAndBookmarked/${userId}`, { withCredentials: true });
+  return axiosService.get(`${postUrl}/${postId}/isLikedAndBookmarked/${userId}`);
 };
 const likePost = (postId, userId) => {
-  return axios.post(`${postUrl}/${postId}/likes/${userId}`, null, { withCredentials: true });
+  return axiosService.post(`${postUrl}/${postId}/likes/${userId}`);
 };
 const unlikePost = (postId, userId) => {
-  return axios.delete(`${postUrl}/${postId}/unlikes/${userId}`, { withCredentials: true });
+  return axiosService.delete(`${postUrl}/${postId}/unlikes/${userId}`);
 };
 
 const savePost = (postId, userId) => {
-  return axios.post(`${postUrl}/${postId}/bookmark/${userId}`, null, { withCredentials: true });
+  return axiosService.post(`${postUrl}/${postId}/bookmark/${userId}`);
 };
 const unsavePost = (postId, userId) => {
-  return axios.delete(`${postUrl}/${postId}/removeBookmark/${userId}`, { withCredentials: true });
+  return axiosService.delete(`${postUrl}/${postId}/removeBookmark/${userId}`);
 };
 
 const postService = {

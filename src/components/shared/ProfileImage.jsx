@@ -21,9 +21,10 @@ const ProfileImage = ({ id = '', height = 'circleImage', width = 'circleImage' }
         setLoading(false);
       }
     };
-    if (!isImageVisible) return;
-    if (id === '') return;
-    if (image !== null) return;
+    if (!isImageVisible || !id || image !== null) {
+      setLoading(false);
+      return;
+    }
     fetchImage();
   }, [isImageVisible, image, id]);
 

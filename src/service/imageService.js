@@ -4,6 +4,9 @@ import { cache } from 'utility/LRUCache';
 
 const get = async (id) => {
   return new Promise(async (resolve, reject) => {
+    if (!id) {
+      reject('id is null');
+    }
     const data = cache.get(id);
     if (data) {
       resolve(data);

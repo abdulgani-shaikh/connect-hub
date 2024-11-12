@@ -1,13 +1,13 @@
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 const clientUrl = process.env.REACT_APP_CLIENT_URL;
 
-const imageUrl = backendUrl + '/api/image';
-const authUrl = backendUrl + '/api/auth/';
-const userUrl = backendUrl + '/api/users';
-const friendUrl = backendUrl + '/api/friends';
-const postUrl = backendUrl + '/api/posts';
-const searchUrl = backendUrl + '/api/search';
-const serverStatusUrl = backendUrl + '/api/server-status';
+const imageUrl = `${backendUrl}/api/image`;
+const authUrl = '/api/auth/';
+const userUrl = '/api/users';
+const friendUrl = '/api/friends';
+const postUrl = '/api/posts';
+const searchUrl = '/api/search';
+const serverStatusUrl = '/api/server-status';
 
 const login = authUrl + 'login';
 const signUp = authUrl + 'sign-up';

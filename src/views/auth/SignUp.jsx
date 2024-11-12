@@ -1,7 +1,7 @@
 import Waves from 'assets/side-wave.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { authService, toastService } from 'service';
+import { authService, storageService, toastService } from 'service';
 import { HttpStatusCode } from 'axios';
 import SubmitButton from 'components/buttons/SubmitButton';
 import StrongPasswordInput from 'components/shared/StrongPasswordInput';
@@ -50,7 +50,10 @@ const SignUp = () => {
         email,
         password: hash
       };
-      await authService.signUp(form);
+      var result = await authService.signUp(form);
+      storageService.setAccessToken(result.data.token);
+      storageService.setRefreshToken(result.data.refreshToken);
+      storageService.setUserId(result.data.user.userId);
       toastService.success('Registered successfully');
       navigate('/unverified-account');
     } catch (error) {

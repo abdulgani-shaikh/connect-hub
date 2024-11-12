@@ -1,7 +1,7 @@
 import Waves from 'assets/side-wave.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { authService, toastService } from 'service';
+import { authService, storageService, toastService } from 'service';
 import { setUserInfo } from './../../redux/slices/userInfoSlice';
 import { HttpStatusCode } from 'axios';
 import { useDispatch } from 'react-redux';
@@ -39,7 +39,9 @@ const Login = () => {
       const hash = hashPassword(password);
 
       const res = await authService.login(email, hash);
-
+      storageService.setAccessToken(res.data.token);
+      storageService.setRefreshToken(res.data.refreshToken);
+      storageService.setUserId(res.data.user.userId);
       dispatch(setUserInfo(res.data));
       toastService.success('Logged In successfully');
       navigate('/');
